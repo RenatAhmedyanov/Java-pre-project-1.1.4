@@ -1,23 +1,38 @@
 package jm.task.core.jdbc.util;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 public class Util {
-    private final String URL = "jdbc:mysql://localhost:3306/mydbtest";
-    private final String USERNAME = "root";
-    private final String PASSWORD = "root";
-    Connection connection;
-    public Util() {
-        try {
-            Driver driver = new com.mysql.cj.jdbc.Driver();
-            DriverManager.registerDriver(driver);
-            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-        } catch (SQLException e) {
-            System.out.println("Соединение не установлено!");
+    private static final String URL = "jdbc:mysql://localhost:3306/mydbtest";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+    private static Connection connection;
+    private static volatile Util instance;
+
+    private Util() {
+
+    }
+    public static Util getInstance() {
+        if (instance == null) {
+            synchronized (Util.class) {
+                if (instance == null) {
+                    instance = new Util();
+                }
+            }
         }
+        return instance;
     }
 
-    public Connection getConnection() {
-        return connection;
+    public static Connection getConnection() {
+       try {
+           return connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+       } catch (SQLException e) {
+           System.out.println("Соединение не установлено!");
+       }
+       return connection;
     }
 }
