@@ -29,7 +29,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
             connection.prepareStatement("DROP TABLE IF EXISTS userTable").executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Сan't remove table");
+            System.out.println("Can't remove table");
         }
     }
 
@@ -38,7 +38,7 @@ public class UserDaoJDBCImpl implements UserDao {
             connection.prepareStatement("INSERT INTO userTable (name, lastName, age) VALUES ('"+name+"', '"+lastName+"', '"+age+"')").executeUpdate();
             System.out.println("User с именем – " + name + " добавлен в базу данных");
         } catch (SQLException e) {
-            System.out.println("Сan't add user");
+            System.out.println("Can't add user");
         }
     }
 
@@ -46,7 +46,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try {
             connection.prepareStatement("DELETE FROM userTable WHERE id = '"+id+"'").executeUpdate();
         } catch (SQLException e) {
-            System.out.println("Сan't remove user");
+            System.out.println("Can't remove user");
         }
     }
 
@@ -64,7 +64,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 System.out.println(user);
             }
         } catch (SQLException e) {
-            System.out.println("Сan't get user list");
+            System.out.println("Can't get user list");
         }
         return userList;
     }
