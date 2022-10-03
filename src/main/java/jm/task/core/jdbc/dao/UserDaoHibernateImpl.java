@@ -57,7 +57,8 @@ public class UserDaoHibernateImpl implements UserDao {
     public void removeUserById(long id) {
         try(Session session = sessionFactory.getCurrentSession()) {
             session.beginTransaction();
-            session.createQuery("DELETE User " + "WHERE id = '"+id+"'").executeUpdate();
+            User user = session.get(User.class, id);
+            session.delete(user);
             session.getTransaction().commit();
         } catch (Exception e) {
             System.out.println("Can't remove user");
